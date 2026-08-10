@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #F7F6F1;      /* paper */
+  --color-panel: #FFFFFF;
+  --color-ink: #14231C;          /* deep green-black */
+  --color-ink-soft: #5A6660;
+  --color-line: #E3E1D7;
+  --color-primary: var(--brand-primary, #1E6B4E);   /* runtime-themed */
+  --color-primary-soft: color-mix(in srgb, var(--brand-primary, #1E6B4E) 10%, white);
+  --color-brass: var(--brand-accent, #B08830);      /* governance accent */
+  --color-good: #1E6B4E;
+  --color-bad: #B3382E;
+  --color-info: #2C5B8A;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Public Sans", system-ui, sans-serif;
+  --font-mono: "Spline Sans Mono", ui-monospace, monospace;
+}
+
+:root { --brand-primary: #1E6B4E; --brand-accent: #B08830; }
+
+html.dark {
+  --color-surface: #101915;
+  --color-panel: #16221C;
+  --color-ink: #EDEBE2;
+  --color-ink-soft: #97A29B;
+  --color-line: #24332B;
+  --color-primary-soft: color-mix(in srgb, var(--brand-primary, #1E6B4E) 22%, #16221C);
+}
+
+body { background: var(--color-surface); color: var(--color-ink); font-family: var(--font-sans); }
+
+.display { font-family: var(--font-display); }
+.figures { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* signature: passbook-ruled rows for financial tables */
+.passbook tbody tr { border-bottom: 1px solid var(--color-line); }
+.passbook tbody tr:nth-child(5n) { border-bottom: 1px double var(--color-line); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@media print {
+  aside, header.topbar, .no-print { display: none !important; }
+  main { padding: 0 !important; }
+}

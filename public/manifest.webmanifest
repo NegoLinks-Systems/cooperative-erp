@@ -1,0 +1,9 @@
+{
+  "name": "Cooperative ERP",
+  "short_name": "Coop ERP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F6F1",
+  "theme_color": "#14231C",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
