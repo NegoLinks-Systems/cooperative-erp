@@ -50,6 +50,8 @@ interface AppContextValue {
   demoMode: boolean; notifCount: number;
   featureFlags: Record<string, boolean>;
   refreshNotifCount: () => void;
+  theme: "dark" | "light";
+  toggleTheme: () => void;
 }
 
 const AppCtx = createContext<AppContextValue | null>(null);
@@ -62,6 +64,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [demoMode, setDemoMode] = useState(false);
   const [notifCount, setNotifCount] = useState(0);
   const [featureFlags, setFeatureFlags] = useState<Record<string, boolean>>({});
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    const saved = typeof window !== "undefined" ? window.localStorage.getItem("nl-theme") : null;
+    return saved === "light" ? "light" : "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { window.localStorage.setItem("nl-theme", theme); } catch { /* storage unavailable */ }
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => setTheme((t) => (t === "dark" ? "light" : "dark")), []);
 
   const role = profile?.role ?? "member";
   const isStaff = STAFF_ROLES.includes(role);
@@ -112,7 +125,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const signOut = async () => { await supabase.auth.signOut(); setSession(null); setProfile(null); };
 
   return (
-    <AppCtx.Provider value={{ session, user: session?.user ?? null, profile, settings, refreshSettings, role, isStaff, isAdmin, signOut, demoMode, notifCount, featureFlags, refreshNotifCount }}>
+    <AppCtx.Provider value={{ session, user: session?.user ?? null, profile, settings, refreshSettings, role, isStaff, isAdmin, signOut, demoMode, notifCount, featureFlags, refreshNotifCount, theme, toggleTheme }}>
       {children}
     </AppCtx.Provider>
   );

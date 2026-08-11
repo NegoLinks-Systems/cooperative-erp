@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, PiggyBank, HandCoins, Scale, Landmark, TrendingUp,
   Award, Boxes, UserRound, MessageSquare, FileBarChart, ShieldCheck, Settings,
   Sparkles, Bell, Search, LogOut, ChevronLeft, ChevronRight, Menu, X, Cpu,
-  Database, Zap, Activity, ToggleLeft,
+  Database, Zap, Activity, ToggleLeft, Sun, Moon,
 } from "lucide-react";
 import { useApp } from "@/contexts/AppContext";
 import { askAI } from "@/lib/ai/client";
@@ -68,7 +68,7 @@ function NotificationCenter({ open, onClose }: { open: boolean; onClose: () => v
     <div className="absolute right-0 top-12 w-80 z-50 glass-accent rounded-xl shadow-2xl overflow-hidden animate-slide-up">
       <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--bg-border)]">
         <h3 className="font-bold text-sm">Notifications</h3>
-        <button onClick={onClose} className="text-[var(--text-muted)] hover:text-white">×</button>
+        <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--text-primary)]">×</button>
       </div>
       <div className="max-h-80 overflow-y-auto">
         {notifications.length === 0 ? (
@@ -81,7 +81,7 @@ function NotificationCenter({ open, onClose }: { open: boolean; onClose: () => v
               <div className={cls("w-2 h-2 rounded-full mt-1.5 shrink-0",
                 n.type === "success" ? "bg-[var(--success)]" : n.type === "warning" ? "bg-[var(--warning)]" : n.type === "error" ? "bg-[var(--danger)]" : "bg-[var(--info)]")} />
               <div>
-                <p className="text-sm font-semibold text-white">{n.title}</p>
+                <p className="text-sm font-semibold text-[var(--text-primary)]">{n.title}</p>
                 {n.body ? <p className="text-xs text-[var(--text-muted)] mt-0.5">{n.body}</p> : null}
                 <p className="text-xs text-[var(--text-muted)] mt-1">{new Date(n.created_at).toLocaleDateString()}</p>
               </div>
@@ -121,7 +121,7 @@ function AIQuickPanel({ open, onClose }: { open: boolean; onClose: () => void })
           <Sparkles size={14} style={{ color: "var(--gold)" }} />
           <h3 className="font-bold text-sm gradient-text-gold">{settings.ai_assistant_name ?? "AI Assistance"}</h3>
         </div>
-        <button onClick={onClose} className="text-[var(--text-muted)] hover:text-white">×</button>
+        <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--text-primary)]">×</button>
       </div>
       <div className="p-4 space-y-3">
         {response ? (
@@ -172,13 +172,13 @@ function SearchPalette({ open, onClose }: { open: boolean; onClose: () => void }
           <Search size={16} style={{ color: "var(--text-muted)" }} />
           <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)}
             placeholder="Search modules…"
-            className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-[var(--text-muted)]" />
+            className="flex-1 bg-transparent outline-none text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)]" />
           <kbd className="text-xs text-[var(--text-muted)] border border-[var(--bg-border)] rounded px-1.5 py-0.5">ESC</kbd>
         </div>
         <div className="p-2 max-h-72 overflow-y-auto">
           {filtered.map((l) => (
             <button key={l.to} onClick={() => { navigate(l.to); onClose(); }}
-              className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-[var(--text-secondary)] hover:text-white hover:bg-[var(--accent-glow)] transition-colors">
+              className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-glow)] transition-colors">
               {l.label}
             </button>
           ))}
@@ -190,7 +190,7 @@ function SearchPalette({ open, onClose }: { open: boolean; onClose: () => void }
 
 // ─── Main AppShell ─────────────────────────────────────────────────────────────
 export default function AppShell(): ReactNode {
-  const { settings, profile, signOut, isStaff, notifCount } = useApp();
+  const { settings, profile, signOut, notifCount, theme, toggleTheme } = useApp();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -220,11 +220,11 @@ export default function AppShell(): ReactNode {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-3 px-2">
+      <nav className="flex-1 overflow-y-auto py-2 px-2.5">
         {NAV.map((group) => (
-          <div key={group.group} className="mb-2">
+          <div key={group.group}>
             {!collapsed ? (
-              <p className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 mb-1"
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] px-3 pt-3 pb-1.5"
                 style={{ color: group.gold ? "var(--gold)" : "var(--text-muted)" }}>
                 {group.group}
               </p>
@@ -232,15 +232,15 @@ export default function AppShell(): ReactNode {
             {group.items.map((item) => (
               <NavLink key={item.to} to={item.to}
                 className={({ isActive }) => cls(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-sm font-medium transition-all",
+                  "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13.5px] font-medium transition-all",
                   isActive
-                    ? "text-[var(--accent-light)] bg-[var(--accent-glow)] border-l-4 border-[var(--accent-primary)]"
-                    : "text-[var(--text-secondary)] hover:text-white hover:bg-white/5",
+                    ? "text-[var(--accent-light)] bg-[var(--accent-glow)] font-semibold"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-glow)]",
                   collapsed && "justify-center px-2"
                 )}
                 title={collapsed ? item.label : undefined}
                 onClick={() => setMobileOpen(false)}>
-                <item.icon size={18} className="shrink-0" />
+                <item.icon size={17} className="shrink-0" />
                 {!collapsed ? item.label : null}
               </NavLink>
             ))}
@@ -257,7 +257,7 @@ export default function AppShell(): ReactNode {
               {(profile?.full_name ?? "U").charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">{profile?.full_name ?? "User"}</p>
+              <p className="text-[13px] font-semibold text-[var(--text-primary)] truncate">{profile?.full_name ?? "User"}</p>
               <p className="text-xs text-[var(--text-muted)] truncate capitalize">{profile?.role?.replace(/_/g, " ")}</p>
             </div>
             <button onClick={() => signOut()} title="Sign out" className="text-[var(--text-muted)] hover:text-[var(--danger)] transition-colors p-1 rounded">
@@ -282,7 +282,7 @@ export default function AppShell(): ReactNode {
       )} style={{ background: "var(--bg-surface)", borderRight: "1px solid var(--bg-border)" }}>
         <SidebarContent />
         <button onClick={() => setCollapsed(!collapsed)}
-          className="absolute top-1/2 -right-3 w-6 h-6 rounded-full flex items-center justify-center text-white shadow-lg z-10 hidden md:flex"
+          className="absolute top-1/2 -right-3 w-6 h-6 rounded-full flex items-center justify-center text-[var(--text-primary)] shadow-lg z-10 hidden md:flex"
           style={{ background: "var(--accent-primary)", transform: "translateY(-50%)" }}>
           {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
         </button>
@@ -302,8 +302,8 @@ export default function AppShell(): ReactNode {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Navbar */}
         <header className="shrink-0 flex items-center gap-3 px-4 h-16 relative"
-          style={{ background: "rgba(14,14,28,0.95)", backdropFilter: "blur(10px)", borderBottom: "1px solid var(--bg-border)" }}>
-          <button className="md:hidden text-[var(--text-secondary)] hover:text-white p-1"
+          style={{ background: "var(--bg-surface)", borderBottom: "1px solid var(--bg-border)" }}>
+          <button className="md:hidden text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1"
             onClick={() => setMobileOpen(!mobileOpen)}>
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -317,11 +317,20 @@ export default function AppShell(): ReactNode {
           <div className="flex items-center gap-1">
             {/* Search */}
             <button onClick={() => setShowSearch(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-[var(--text-muted)] hover:text-white hover:bg-white/5 transition-colors"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-glow)] transition-colors"
               style={{ border: "1px solid var(--bg-border)" }}>
               <Search size={13} />
               <span className="hidden sm:block">Search</span>
               <kbd className="hidden sm:block text-[10px] border border-[var(--bg-border)] rounded px-1 py-0.5">⌘K</kbd>
+            </button>
+
+            {/* Theme toggle */}
+            <button onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-[var(--accent-glow)] transition-colors"
+              title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
+              {theme === "dark"
+                ? <Sun  size={17} style={{ color: "var(--text-secondary)" }} />
+                : <Moon size={17} style={{ color: "var(--text-secondary)" }} />}
             </button>
 
             {/* AI */}

@@ -90,3 +90,37 @@ html, body, #root { height: 100%; background: var(--bg-primary); color: var(--te
 
 @media print { aside, nav, .no-print, .demo-banner { display: none !important; } body { background: white; color: black; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } }
+
+/* ── LIGHT THEME ───────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary:   #F6F7F9;
+  --bg-surface:   #FFFFFF;
+  --bg-card:      #FFFFFF;
+  --bg-border:    #E3E6EB;
+  --text-primary:   #111827;
+  --text-secondary: #4B5563;
+  --text-muted:     #9CA3AF;
+  --accent-primary: #15803D;
+  --accent-light:   #16A34A;
+  --accent-deep:    #166534;
+  --accent-glow:    rgba(22, 163, 74, 0.10);
+  --accent-border:  rgba(22, 163, 74, 0.28);
+  --gold:       #A9822F;
+  --gold-light: #C9A84C;
+  --gold-glow:  rgba(169, 130, 47, 0.12);
+}
+[data-theme="light"] .glass,
+[data-theme="light"] .glass-accent { background: rgba(255,255,255,0.92); }
+[data-theme="light"] .nl-card,
+[data-theme="light"] .nl-card-accent { box-shadow: 0 1px 3px rgba(16,24,40,0.06); }
+[data-theme="light"] .nl-input,
+[data-theme="light"] .nl-select { background: #FFFFFF; }
+[data-theme="light"] .nl-table thead tr { background: #F9FAFB; }
+[data-theme="light"] .gradient-text-accent,
+[data-theme="light"] .gradient-text-gold { -webkit-text-fill-color: initial; background: none; }
+[data-theme="light"] .gradient-text-accent { color: var(--accent-deep); }
+[data-theme="light"] .gradient-text-gold   { color: var(--gold); }
+[data-theme="light"] ::-webkit-scrollbar-track { background: #EEF0F3; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #CBD2DA; }
+
+html, body { transition: background-color 0.2s ease, color 0.2s ease; }

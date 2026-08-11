@@ -89,7 +89,7 @@ export default function Dashboard() {
   if (!isStaff) return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
       <CheckCircle2 size={44} style={{ color: "var(--accent-primary)" }} />
-      <h2 className="text-xl font-bold text-white">Welcome to NegoLinks</h2>
+      <h2 className="text-xl font-bold text-[var(--text-primary)]">Welcome to NegoLinks</h2>
       <p className="text-[var(--text-secondary)]">Cooperative &amp; Microfinance ERP</p>
     </div>
   );
@@ -115,7 +115,7 @@ export default function Dashboard() {
               <Database size={20} style={{ color: "var(--accent-primary)" }} />
             </div>
             <div>
-              <p className="font-semibold text-white text-sm mb-1">Your database is empty</p>
+              <p className="font-semibold text-[var(--text-primary)] text-sm mb-1">Your database is empty</p>
               <p className="text-[13px] text-[var(--text-secondary)] leading-relaxed">
                 Load demo data to see the platform populated with realistic members, savings, loans and transactions — or start adding real records.
               </p>
@@ -198,7 +198,7 @@ export default function Dashboard() {
                       <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: CHART_COLORS[i % CHART_COLORS.length] }} />
                       <span className="text-[var(--text-secondary)] capitalize">{s.name.replace(/_/g, " ")}</span>
                     </div>
-                    <span className="text-white font-semibold figures">{s.value}</span>
+                    <span className="text-[var(--text-primary)] font-semibold figures">{s.value}</span>
                   </div>
                 ))}
               </div>

@@ -92,7 +92,7 @@ export default function Login() {
 
           {/* Text block — clean separation, no overlap */}
           <div className="text-center mt-6">
-            <h2 className="text-[26px] font-bold text-white leading-tight mb-3">
+            <h2 className="text-[26px] font-bold text-[var(--text-primary)] leading-tight mb-3">
               Built for Cooperatives
             </h2>
             <p className="text-[15px] text-[var(--text-secondary)] leading-relaxed">
@@ -125,7 +125,7 @@ export default function Login() {
             <h1 className="text-[30px] font-black gradient-text-gold tracking-tight leading-none mb-2.5">
               NegoLinks
             </h1>
-            <p className="text-[15px] text-white font-semibold text-center leading-snug">
+            <p className="text-[15px] text-[var(--text-primary)] font-semibold text-center leading-snug">
               Cooperative &amp; Microfinance ERP
             </p>
             <p className="text-[12px] text-[var(--text-muted)] mt-1.5 text-center">

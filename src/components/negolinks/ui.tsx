@@ -140,8 +140,8 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
       <div className={cls("glass-accent rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto animate-slide-up", wide ? "w-full max-w-3xl" : "w-full max-w-lg")}>
         {title ? (
           <div className="flex items-center justify-between p-5 border-b border-[var(--bg-border)]">
-            <h2 className="font-bold text-base text-white">{title}</h2>
-            <button onClick={onClose} className="text-[var(--text-muted)] hover:text-white text-xl leading-none px-2">×</button>
+            <h2 className="font-bold text-base text-[var(--text-primary)]">{title}</h2>
+            <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xl leading-none px-2">×</button>
           </div>
         ) : null}
         <div className="p-5">{children}</div>
@@ -159,8 +159,8 @@ export function Tabs({ tabs, active, onChange }: { tabs: string[]; active: strin
           className={cls(
             "px-4 py-2 text-xs font-semibold rounded-md whitespace-nowrap transition-all",
             t === active
-              ? "text-white shadow-sm"
-              : "text-[var(--text-secondary)] hover:text-white hover:bg-white/5"
+              ? "text-[var(--text-primary)] shadow-sm"
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/5"
           )}
           style={t === active ? { background: "linear-gradient(135deg, var(--accent-primary), var(--accent-deep))" } : {}}
         >{t}</button>
@@ -210,7 +210,7 @@ export function PageTitle({ title, sub, action }: { title: string; sub?: string;
   return (
     <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
       <div>
-        <h1 className="text-xl font-bold text-white">{title}</h1>
+        <h1 className="text-xl font-bold text-[var(--text-primary)]">{title}</h1>
         {sub ? <p className="text-sm text-[var(--text-secondary)] mt-0.5">{sub}</p> : null}
       </div>
       {action ? <div className="flex flex-wrap gap-2">{action}</div> : null}
