@@ -65,7 +65,7 @@ export default function AIAssistant() {
         }
       />
 
-      <Card accent className="flex flex-col" style={{ minHeight: 500 }}>
+      <Card accent className="flex flex-col min-h-[500px]">
         {/* Chat area */}
         <div ref={scroller} className="flex-1 overflow-y-auto space-y-4 mb-4 max-h-[60vh]" style={{ minHeight: 300 }}>
           {turns.length === 0 ? (
@@ -74,7 +74,7 @@ export default function AIAssistant() {
                 style={{ background: "linear-gradient(135deg, var(--accent-primary), var(--accent-deep))", boxShadow: "0 0 40px var(--accent-glow)" }}>
                 <Sparkles size={28} className="text-white" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-1">{aiName}</h3>
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-1">{aiName}</h3>
               <p className="text-sm text-[var(--text-muted)] mb-6">Powered by NegoLinks Intelligence Engine</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {STARTERS.map((s) => (
@@ -91,7 +91,7 @@ export default function AIAssistant() {
               <div key={i} className={`flex ${t.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                   t.role === "user"
-                    ? "text-white"
+                    ? "text-[var(--text-primary)]"
                     : "text-[var(--text-secondary)]"
                 }`} style={t.role === "user"
                   ? { background: "linear-gradient(135deg, var(--accent-primary), var(--accent-deep))" }

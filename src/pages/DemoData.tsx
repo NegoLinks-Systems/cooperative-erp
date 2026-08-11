@@ -72,29 +72,55 @@ async function generateDemoData(scenario: string, onPhase: (p: string) => void):
   const { data: accountRows, error: aErr } = await supabase.from("savings_accounts").insert(accounts).select("id");
   if (aErr) throw new Error(`Savings accounts: ${aErr.message}`);
 
-  // 5. Savings transactions — this is what creates the balances
+  // 5. Savings transactions — MUST go through post_savings_txn RPC.
+  // savings_transactions has no INSERT policy by design (see 004_rls.sql line 68);
+  // the security-definer function is the only permitted write path.
   onPhase("Posting savings transactions…");
-  const txnsPerAccount = scenario === "heavy" ? 8 : scenario === "large" ? 5 : 3;
-  const transactions: Array<Record<string, unknown>> = [];
-  (accountRows ?? []).forEach((acc) => {
-    for (let t = 0; t < txnsPerAccount; t++) {
-      const isWithdrawal = t > 0 && t % 4 === 0;
-      transactions.push({
-        account_id: acc.id as string,
-        direction: isWithdrawal ? "withdrawal" : "deposit",
-        amount: isWithdrawal
-          ? Math.round((Math.random() * 20000 + 5000) / 100) * 100
-          : Math.round((Math.random() * 80000 + 15000) / 100) * 100,
-        method: "cash",
-        narration: isWithdrawal ? "Demo withdrawal" : "Demo monthly contribution",
-      });
+  const depositsPer   = scenario === "heavy" ? 6 : scenario === "large" ? 4 : 3;
+  const withdrawalsPer = scenario === "heavy" ? 2 : 1;
+  const ids = (accountRows ?? []).map((a) => a.id as string);
+
+  // Deposits first — withdrawals would fail the minimum-balance check on an empty account.
+  const postTxn = async (accountId: string, direction: "deposit" | "withdrawal", amount: number) => {
+    const { error } = await supabase.rpc("post_savings_txn", {
+      p_account: accountId,
+      p_direction: direction,
+      p_amount: amount,
+      p_method: "cash",
+      p_reference: null,
+      p_narration: direction === "deposit" ? "Demo contribution" : "Demo withdrawal",
+    });
+    if (error) throw new Error(`Transactions: ${error.message}`);
+  };
+
+  // Run with limited concurrency so we don't flood the connection pool.
+  const runBatched = async (jobs: Array<() => Promise<void>>, size = 8) => {
+    for (let i = 0; i < jobs.length; i += size) {
+      await Promise.all(jobs.slice(i, i + size).map((j) => j()));
+      onPhase(`Posting transactions… ${Math.min(i + size, jobs.length)}/${jobs.length}`);
+    }
+  };
+
+  const depositJobs: Array<() => Promise<void>> = [];
+  ids.forEach((id) => {
+    for (let d = 0; d < depositsPer; d++) {
+      const amt = Math.round((Math.random() * 70000 + 20000) / 500) * 500;
+      depositJobs.push(() => postTxn(id, "deposit", amt));
     }
   });
-  // Insert in batches of 500 to stay within limits
-  for (let i = 0; i < transactions.length; i += 500) {
-    const { error: tErr } = await supabase.from("savings_transactions").insert(transactions.slice(i, i + 500));
-    if (tErr) throw new Error(`Transactions: ${tErr.message}`);
-  }
+  await runBatched(depositJobs);
+
+  const withdrawJobs: Array<() => Promise<void>> = [];
+  ids.forEach((id, i) => {
+    if (i % 3 !== 0) return; // only some members withdraw
+    for (let w = 0; w < withdrawalsPer; w++) {
+      const amt = Math.round((Math.random() * 12000 + 3000) / 500) * 500;
+      withdrawJobs.push(() => postTxn(id, "withdrawal", amt).catch(() => { /* min-balance guard hit; skip */ }));
+    }
+  });
+  await runBatched(withdrawJobs);
+
+  const txnTotal = depositJobs.length + withdrawJobs.length;
 
   // 6. Employees
   onPhase("Creating employees…");
@@ -131,7 +157,7 @@ async function generateDemoData(scenario: string, onPhase: (p: string) => void):
     .eq("id", 1);
   await supabase.from("audit_logs").insert({
     action: "demo_load", entity: "system", entity_id: scenario,
-    detail: { scenario, members: count, transactions: transactions.length },
+    detail: { scenario, members: count, transactions: txnTotal },
   });
 }
 
