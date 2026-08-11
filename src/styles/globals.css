@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary:   #080810;
+  --bg-surface:   #0E0E1C;
+  --bg-card:      #131325;
+  --bg-border:    #1C1C34;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #A0A0B8;
+  --text-muted:     #5A5A78;
+  --accent-primary: #16A34A;
+  --accent-light:   #4ADE80;
+  --accent-deep:    #15803D;
+  --accent-glow:    rgba(22, 163, 74, 0.15);
+  --accent-border:  rgba(22, 163, 74, 0.3);
+  --gold:       #C9A84C;
+  --gold-light: #E8C86A;
+  --gold-glow:  rgba(201, 168, 76, 0.15);
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger:  #EF4444;
+  --info:    #3B82F6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb { background: var(--bg-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+.glass { background: rgba(19,19,37,0.85); backdrop-filter: blur(20px); border: 1px solid var(--bg-border); }
+.glass-accent { background: rgba(19,19,37,0.85); backdrop-filter: blur(20px); border: 1px solid var(--accent-border); box-shadow: 0 0 30px var(--accent-glow); }
+
+.gradient-text-accent { background: linear-gradient(135deg, var(--accent-primary), var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.gradient-text-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+.btn-primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-deep)); color: #fff; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--accent-glow); }
+.btn-ghost { background: transparent; border: 1px solid var(--accent-border); color: var(--accent-light); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.btn-ghost:hover { background: var(--accent-glow); }
+.btn-danger { background: linear-gradient(135deg, #EF4444, #B91C1C); color: #fff; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+.btn-neutral { background: rgba(255,255,255,0.06); border: 1px solid var(--bg-border); color: var(--text-secondary); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.btn-neutral:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+
+.nl-table { width: 100%; border-collapse: collapse; }
+.nl-table thead tr { background: #131325; border-bottom: 2px solid var(--accent-border); }
+.nl-table thead th { padding: 10px 14px; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); white-space: nowrap; }
+.nl-table tbody tr { border-bottom: 1px solid var(--bg-border); transition: background 0.15s; }
+.nl-table tbody tr:hover { background: var(--accent-glow); }
+.nl-table tbody td { padding: 11px 14px; font-size: 0.875rem; color: var(--text-primary); }
+
+.badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; }
+.badge-success { background: rgba(34,197,94,0.15); color: #22C55E; }
+.badge-warning { background: rgba(245,158,11,0.15); color: #F59E0B; }
+.badge-danger  { background: rgba(239,68,68,0.15);  color: #EF4444; }
+.badge-info    { background: rgba(59,130,246,0.15);  color: #3B82F6; }
+.badge-accent  { background: var(--accent-glow); color: var(--accent-light); }
+.badge-neutral { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+.badge-gold    { background: var(--gold-glow); color: var(--gold-light); }
+
+.nl-input { background: rgba(255,255,255,0.04); border: 1px solid var(--bg-border); border-radius: 8px; color: var(--text-primary); font-size: 0.875rem; padding: 9px 12px; width: 100%; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.nl-input:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px var(--accent-glow); }
+.nl-input::placeholder { color: var(--text-muted); }
+.nl-select { background: rgba(255,255,255,0.04); border: 1px solid var(--bg-border); border-radius: 8px; color: var(--text-primary); font-size: 0.875rem; padding: 9px 12px; width: 100%; outline: none; }
+.nl-select:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px var(--accent-glow); }
+.nl-select option { background: var(--bg-card); }
+
+.nl-card { background: var(--bg-card); border: 1px solid var(--bg-border); border-radius: 12px; padding: 20px; }
+.nl-card-accent { background: var(--bg-card); border: 1px solid var(--accent-border); border-radius: 12px; padding: 20px; box-shadow: 0 0 20px var(--accent-glow); }
+
+.demo-banner { background: linear-gradient(90deg, rgba(245,158,11,0.2), transparent); border-bottom: 1px solid rgba(245,158,11,0.3); color: #F59E0B; font-size: 0.8rem; font-weight: 600; padding: 6px 20px; display: flex; align-items: center; gap: 8px; }
+
+@keyframes pulse-glow { 0%,100%{opacity:1} 50%{opacity:0.5} }
+@keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes slide-up { from{transform:translateY(10px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes fade-in { from{opacity:0} to{opacity:1} }
+@keyframes grow-circle { 0%{transform:scale(0.8);opacity:0.3} 100%{transform:scale(1.2);opacity:0} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
+.animate-slide-up   { animation: slide-up 0.3s ease-out; }
+.animate-fade-in    { animation: fade-in 0.4s ease-out; }
+.animate-float      { animation: float 3s ease-in-out infinite; }
+
+.passbook tbody tr { border-bottom: 1px solid var(--bg-border); }
+.passbook tbody tr:nth-child(5n) { border-bottom: 1px double var(--accent-border); }
+.figures { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+@media print { aside, nav, .no-print, .demo-banner { display: none !important; } body { background: white; color: black; } }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation: none !important; transition: none !important; } }

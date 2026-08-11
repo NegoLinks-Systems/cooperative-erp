@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8C86A"/>
+      <stop offset="50%" stop-color="#C9A84C"/>
+      <stop offset="100%" stop-color="#A07830"/>
+    </linearGradient>
+  </defs>
+  <!-- Infinity loop: two interlocked circles forming continuous motion -->
+  <path d="M40 40 C40 28 52 20 60 20 C70 20 76 28 76 36 C76 44 70 52 60 52 C52 52 44 48 40 40 Z" 
+        stroke="url(#gold)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M40 40 C40 52 28 60 20 60 C10 60 4 52 4 44 C4 36 10 28 20 28 C28 28 36 32 40 40 Z" 
+        stroke="url(#gold)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Arrow tip right -->
+  <path d="M72 32 L78 36 L72 40" stroke="url(#gold)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Arrow tip left -->
+  <path d="M8 48 L2 44 L8 40" stroke="url(#gold)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
